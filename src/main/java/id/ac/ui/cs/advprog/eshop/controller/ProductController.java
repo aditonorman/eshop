@@ -26,7 +26,7 @@ public class ProductController {
     @PostMapping("/create")
     public String createProductPost(@ModelAttribute Product product, Model model) {
         service.create(product);
-        return "redirect:list";
+        return "redirect:/product/list";
     }
 
     @GetMapping("/list")
@@ -41,17 +41,23 @@ public class ProductController {
     public String editProductPage(@PathVariable String productId, Model model) {
         Product product = service.findById(productId);
         if (product == null) {
-            // Optionally, add error handling if product not found
             return "redirect:/product/list";
         }
         model.addAttribute("product", product);
-        return "editProduct";  // Name of the Thymeleaf template for editing
+        return "editProduct";
     }
 
     // POST: Process the update submission
     @PostMapping("/edit")
     public String editProductPost(@ModelAttribute Product product) {
         service.update(product);
+        return "redirect:/product/list";
+    }
+
+    // NEW: Delete a product
+    @GetMapping("/delete/{productId}")
+    public String deleteProduct(@PathVariable String productId) {
+        service.delete(productId);
         return "redirect:/product/list";
     }
 }
