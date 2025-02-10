@@ -35,4 +35,23 @@ public class ProductController {
         model.addAttribute("products", allProducts);
         return "productList";
     }
+
+    // GET: Display the edit form with existing product data
+    @GetMapping("/edit/{productId}")
+    public String editProductPage(@PathVariable String productId, Model model) {
+        Product product = service.findById(productId);
+        if (product == null) {
+            // Optionally, add error handling if product not found
+            return "redirect:/product/list";
+        }
+        model.addAttribute("product", product);
+        return "editProduct";  // Name of the Thymeleaf template for editing
+    }
+
+    // POST: Process the update submission
+    @PostMapping("/edit")
+    public String editProductPost(@ModelAttribute Product product) {
+        service.update(product);
+        return "redirect:/product/list";
+    }
 }
