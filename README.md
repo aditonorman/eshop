@@ -1,0 +1,3 @@
+# Reflection 1
+
+I implemented the Edit and Delete Product features using Spring Boot while following clean code principles such as meaningful naming, modularity, and single responsibility. Secure coding practices were applied by validating inputs and preventing direct access to sensitive operations. One improvement could be implementing better error handling for cases where a product ID is not found. Additionally, using a database instead of an in-memory list would enhance data persistence and security.
