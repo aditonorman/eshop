@@ -2,6 +2,7 @@ plugins {
     java
     id("org.springframework.boot") version "3.3.8"
     id("io.spring.dependency-management") version "1.1.7"
+    id("jacoco")
 }
 
 group = "id.ac.ui.cs.advprog"
@@ -48,7 +49,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
 }
 
-// Register test tasks
+// Optional: custom test tasks
 tasks.register<Test>("unitTest") {
     description = "Runs unit tests."
     group = "verification"
@@ -67,7 +68,23 @@ tasks.register<Test>("functionalTest") {
     }
 }
 
-// Ensure JUnit Platform is used
+// ----- Key part: Exclude FunctionalTest from the built-in `test` task and finalize with Jacoco -----
+
+tasks.test {
+    // 1) Exclude functional tests (they will NOT be run by `./gradlew test`)
+    filter {
+        excludeTestsMatching("*FunctionalTest")
+    }
+    // 2) Ensure code coverage report (jacocoTestReport) runs right after `test`
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+// The jacocoTestReport task depends on the results of `test`
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+}
+
+// ----- Ensure JUnit Platform is used for ALL test tasks -----
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
