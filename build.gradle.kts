@@ -32,24 +32,28 @@ val webdriverManagerVersion = "5.6.3"
 val junitJupiterVersion = "5.9.1"
 
 dependencies {
-    // Spring Boot Dependencies
+    // === Application Dependencies ===
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    compileOnly("org.projectlombok:lombok")
+
+    // === Development-Only Dependencies ===
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+    // === Annotation Processors ===
+    compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     annotationProcessor("org.projectlombok:lombok")
 
-    // Testing Dependencies
+    // === Unit Testing Dependencies ===
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
 
-    // Selenium and JUnit Dependencies
+    // === Selenium and WebDriver Testing Dependencies ===
     testImplementation("org.seleniumhq.selenium:selenium-java:$seleniumJavaVersion")
     testImplementation("io.github.bonigarcia:selenium-jupiter:$seleniumJupiterVersion")
     testImplementation("io.github.bonigarcia:webdrivermanager:$webdriverManagerVersion")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
 }
 
 // Optional: custom test tasks
