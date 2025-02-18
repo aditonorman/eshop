@@ -32,6 +32,7 @@ val webdriverManagerVersion = "5.6.3"
 val junitJupiterVersion = "5.9.1"
 
 dependencies {
+
     // === Application Dependencies ===
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -55,6 +56,7 @@ dependencies {
     testImplementation("io.github.bonigarcia:selenium-jupiter:$seleniumJupiterVersion")
     testImplementation("io.github.bonigarcia:webdrivermanager:$webdriverManagerVersion")
 }
+
 
 // Optional: custom test tasks
 tasks.register<Test>("unitTest") {
