@@ -26,7 +26,6 @@ public class CreateProductFunctionalTest {
     @BeforeEach
     public void setUp() {
         // Set the ChromeDriver path if necessary, e.g.:
-        // System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
