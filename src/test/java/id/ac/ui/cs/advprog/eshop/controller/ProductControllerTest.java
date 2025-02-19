@@ -56,7 +56,7 @@ class ProductControllerTest {
     }
 
     @Test
-    void testEditProductPage() {
+    void testEditProductPageFound() {
         Product product = new Product();
         given(productService.findById("1")).willReturn(product);
 
@@ -66,9 +66,17 @@ class ProductControllerTest {
     }
 
     @Test
+    void testEditProductPageNotFound() {
+        // This test covers the branch where the product is not found.
+        given(productService.findById("nonexistent")).willReturn(null);
+
+        String viewName = productController.editProductPage("nonexistent", model);
+        assertEquals("redirect:/product/list", viewName);
+    }
+
+    @Test
     void testEditProductPost() {
         Product product = new Product();
-        // Use the Lombok-generated setter for productId
         product.setProductId("1");
 
         String redirect = productController.editProductPost(product);
