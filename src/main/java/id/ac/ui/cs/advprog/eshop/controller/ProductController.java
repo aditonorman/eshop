@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation .*;
 import id.ac.ui.cs.advprog.eshop.model.Car;
-import org.springframework.web.bind.annotation.*;
 import id.ac.ui.cs.advprog.eshop.service.CarServiceImpl;
 
 
@@ -98,7 +97,7 @@ class CarController extends ProductController {
     public String editCarPage(@PathVariable String carId, Model model) {
         Car car = carservice.findById(carId);
         model.addAttribute("car", car);
-        return "editCar";
+        return "EditCar";
     }
 
     @PostMapping("/editCar")
