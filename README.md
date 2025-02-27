@@ -26,3 +26,16 @@ By following these improvements, the new functional test suite will maintain hig
 2. ![App Screenshot](images/img_1.png)
 
 Yes, my current implementation meets the definition of Continuous Integration (CI) and Continuous Deployment (CD). My CI process is well-covered by multiple workflows that automate code checkout, building, testing, and various code analyses (such as with SonarQube, SonarCloud, and Scorecard), ensuring that every commit is validated against quality standards. Additionally, since my project is deployed automatically on Koyeb whenever I push my code, the CD aspect is fulfilled, ensuring that new changes are continuously integrated into the live environment with minimal manual intervention.
+
+# Module 3 
+
+### 1 
+I applied the Single Responsibility Principle by separating the controllers so that CarController and ProductController each handle only their own domain. This prevents mixing concerns and ensures that changes to the logic for managing cars won’t affect product management and vice versa.
+
+For the Open/Closed Principle, I refactored the repository update method to use Spring’s BeanUtils.copyProperties. This allows me to add new fields to my model without modifying the update logic, making the code easier to extend while keeping existing tested functionality intact.
+
+To follow the Dependency Inversion Principle, I modified my controllers to depend on service interfaces rather than concrete implementations. This makes it easy to swap implementations for testing or future changes without modifying the controller cod
+### 2
+Applying these principles has several advantages. Maintainability is improved because each component has a focused responsibility, reducing the risk of unintended side effects when making changes. For example, if I need to fix a bug in the car management logic, it remains isolated within CarController and its related services. These principles also make it easier to evolve the code, as I can add new features without rewriting core logic—like how the generic update method handles new fields automatically. Additionally, using interfaces makes the system more flexible and testable since I can replace actual implementations with mocks during unit testing.
+### 3
+On the other hand, not applying these principles comes with major drawbacks. Without Single Responsibility, controllers could become monolithic, making it harder to maintain and increasing the risk of breaking unrelated functionality. Without Open/Closed, every model change would require revisiting multiple parts of the code, including repository update methods, raising the likelihood of introducing bugs. And without Dependency Inversion, controllers would be tightly coupled to specific implementations, making testing and future modifications more difficult while reducing overall system flexibility.
