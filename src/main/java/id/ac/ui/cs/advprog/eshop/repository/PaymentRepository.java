@@ -4,31 +4,24 @@ import id.ac.ui.cs.advprog.eshop.model.Payment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PaymentRepository {
-    private final List<Payment> payments = new ArrayList<>();
+    private final Map<String, Payment> paymentMap = new ConcurrentHashMap<>();
 
     public Payment save(Payment payment) {
-        // If an existing Payment has the same ID, update it.
-        for (int i = 0; i < payments.size(); i++) {
-            if (payments.get(i).getId().equals(payment.getId())) {
-                payments.set(i, payment);
-                return payment;
-            }
-        }
-        // If not found, add as new.
-        payments.add(payment);
+        // Adds a new payment or updates an existing one using the payment's id as key.
+        paymentMap.put(payment.getId(), payment);
         return payment;
     }
 
     public Payment findById(String paymentId) {
-        return payments.stream()
-                .filter(p -> p.getId().equals(paymentId))
-                .findFirst()
-                .orElse(null);
+        return paymentMap.get(paymentId);
     }
 
     public List<Payment> findAll() {
-        return payments;
+        // Returns a copy of the payments list to prevent external modifications.
+        return new ArrayList<>(paymentMap.values());
     }
 }
